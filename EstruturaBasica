@@ -12,5 +12,5 @@ class Pessoa {                                            //class: define o mode
   }
 }
 
-const p1 = new Pessoa("Maria", 25);
+const p1 = new Pessoa("Ingrid", 30);
 p1.falar();

@@ -1,0 +1,16 @@
+class Pessoa {                                            //class: define o modelo
+  nome: string;
+  idade: number;
+
+  constructor(nome: string, idade: number) {             //constructor(): método especial chamado ao criar o objeto.
+    this.nome = nome;                                    //this: se refere ao próprio objeto.
+    this.idade = idade;
+  }
+
+  falar(): void {
+    console.log(`Olá! Meu nome é ${this.nome} e tenho ${this.idade} anos.`);
+  }
+}
+
+const p1 = new Pessoa("Maria", 25);
+p1.falar();

@@ -1,0 +1,36 @@
+Conceitos do Paradigma Orientado a Objetos
+
+- O que é um Paradigma? 
+Um paradigma de programação é um modelo de pensamento, um conjunto de conceitos que guia a forma como desenvolvemos software.
+
+Os principais paradigmas são:
+1.Estruturado (ou procedural): foco em funções e sequência de comandos.
+2.Orientado a Objetos: foco em objetos que representam entidades do mundo real.
+3.Funcional: foco em funções puras e imutabilidade.
+
+- Motivação para a POO
+Nos sistemas antigos (estruturados), era comum o código se tornar difícil de manter e repleto de dependências.
+
+- A POO surgiu para:
+Tornar o código mais modular e reutilizável;
+Facilitar a manutenção e evolução de sistemas;
+Aproximar a lógica do software ao modo como pensamos o mundo real.
+
+| Princípio          | Definição                                                                | Benefício                        |
+| ------------------ | ------------------------------------------------------------------------ | -------------------------------- |
+|   Abstração        | Destacar apenas o que é relevante de um objeto.                          | Simplifica o sistema.            |
+|   Encapsulamento   | Proteger os dados e esconder a implementação interna.                    | Segurança e organização.         |
+|   Herança          | Permite que uma classe herde atributos e métodos de outra.               | Reaproveitamento de código.      |
+|   Polimorfismo     | Objetos diferentes podem reagir de maneiras diferentes ao mesmo comando. | Flexibilidade e extensibilidade. |
+
+Exemplo:
+| Mundo real                                          | Em código                                                           |
+| --------------------------------------------------- | ------------------------------------------------------------------- |
+| “Um carro pode acelerar e frear.”                   | `class Carro { acelerar(); frear(); }`                              |
+| “Carros diferentes têm comportamentos semelhantes.” | Herança e polimorfismo (`Carro` → `CarroEsportivo`, `CarroPopular`) |
+
+Analogia visual
+Classe: é o projeto da casa.
+Objeto: é a casa construída.
+Métodos: são as ações que a casa permite (abrir portas, acender luz).
+Atributos: são as características (cor, tamanho, endereço).

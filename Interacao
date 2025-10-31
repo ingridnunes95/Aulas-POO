@@ -1,18 +1,71 @@
-class Cliente {
-  nome: string;
-  conta: Conta;
+// ===============================
+// Exemplo: Interação entre Objetos
+// Conceitos: Classe, Objeto, Associação
+// ===============================
 
+// Classe que representa uma conta bancária
+class Conta {
+  // Atributos: número da conta e saldo atual
+  numero: string;
+  saldo: number;
+
+  // Construtor: executado automaticamente ao criar um novo objeto Conta
+  constructor(numero: string) {
+    this.numero = numero; // define o número da conta
+    this.saldo = 0;       // inicia o saldo com 0
+  }
+
+  // Método: adiciona um valor ao saldo da conta
+  depositar(valor: number): void {
+    this.saldo += valor;
+  }
+
+  // Método: retira um valor do saldo, se houver saldo suficiente
+  sacar(valor: number): void {
+    if (valor <= this.saldo) {
+      this.saldo -= valor;
+    } else {
+      console.log("Saldo insuficiente!");
+    }
+  }
+}
+
+// Classe que representa um cliente do banco
+class Cliente {
+  // Atributos: nome do cliente e sua conta associada
+  nome: string;
+  conta: Conta; // Aqui ocorre a INTERAÇÃO — Cliente possui uma Conta
+
+  // Construtor: recebe o nome e a conta como parâmetros
   constructor(nome: string, conta: Conta) {
     this.nome = nome;
     this.conta = conta;
   }
 
+  // Método: exibe o saldo atual da conta do cliente
   verSaldo(): void {
     console.log(`${this.nome} possui saldo de R$${this.conta.saldo}`);
   }
 }
 
-const conta1 = new Conta();
+// ===============================
+// Demonstração prática
+// ===============================
+
+// Cria uma nova conta (objeto da classe Conta)
+const conta1 = new Conta("001");
+
+// Cria um cliente, associando a conta criada
 const cliente1 = new Cliente("Ana", conta1);
+
+// Cliente deposita dinheiro em sua conta
 cliente1.conta.depositar(500);
-cliente1.verSaldo(); // Ana possui saldo de R$500
+
+// Cliente consulta seu saldo
+cliente1.verSaldo(); // Saída: Ana possui saldo de R$500
+
+// Cliente faz um saque
+cliente1.conta.sacar(200);
+
+// Consulta novamente o saldo
+cliente1.verSaldo(); // Saída: Ana possui saldo de R$300

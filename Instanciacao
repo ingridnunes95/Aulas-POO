@@ -1,0 +1,20 @@
+class Pessoa {
+  nome: string;
+  idade: number;
+
+  constructor(nome: string, idade: number) {
+    this.nome = nome;
+    this.idade = idade;
+  }
+
+  falar(): void {
+    console.log(`Olá! Meu nome é ${this.nome} e tenho ${this.idade} anos.`);
+  }
+}
+
+const p1 = new Pessoa("Ingrid", 30);
+
+//Instanciar = criar um objeto a partir de uma classe
+const p2 = new Pessoa("João", 25);            //Agora p1 e p2 são objetos independentes, mas criados com o mesmo molde.
+
+p2.falar();

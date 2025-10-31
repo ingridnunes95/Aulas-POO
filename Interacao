@@ -1,0 +1,18 @@
+class Cliente {
+  nome: string;
+  conta: Conta;
+
+  constructor(nome: string, conta: Conta) {
+    this.nome = nome;
+    this.conta = conta;
+  }
+
+  verSaldo(): void {
+    console.log(`${this.nome} possui saldo de R$${this.conta.saldo}`);
+  }
+}
+
+const conta1 = new Conta();
+const cliente1 = new Cliente("Ana", conta1);
+cliente1.conta.depositar(500);
+cliente1.verSaldo(); // Ana possui saldo de R$500

@@ -1,0 +1,91 @@
+// ===============================================
+// Exemplo: Polimorfismo em TypeScript
+// Conceitos: Herança, Sobrescrita de métodos, Polimorfismo dinâmico
+// ===============================================
+
+// Classe base (superclasse)
+// Representa um veículo genérico
+class Veiculo {
+  marca: string;
+
+  constructor(marca: string) {
+    this.marca = marca;
+  }
+
+  // Método genérico de movimento
+  mover(): void {
+    console.log("O veículo está se movendo...");
+  }
+}
+
+// Subclasse 1 - Carro
+// Especializa o comportamento de 'mover'
+class Carro extends Veiculo {
+  portas: number;
+
+  constructor(marca: string, portas: number) {
+    // Chama o construtor da classe base
+    super(marca);
+    this.portas = portas;
+  }
+
+  // Sobrescreve o método 'mover' da classe pai
+  mover(): void {
+    console.log(`O carro da marca ${this.marca} está dirigindo na estrada com ${this.portas} portas.`);
+  }
+}
+
+// Subclasse 2 - Bicicleta
+class Bicicleta extends Veiculo {
+  tipo: string;
+
+  constructor(marca: string, tipo: string) {
+    super(marca);
+    this.tipo = tipo;
+  }
+
+  mover(): void {
+    console.log(`A bicicleta ${this.tipo} da marca ${this.marca} está pedalando pela ciclovia.`);
+  }
+}
+
+// Subclasse 3 - Avião
+class Aviao extends Veiculo {
+  capacidade: number;
+
+  constructor(marca: string, capacidade: number) {
+    super(marca);
+    this.capacidade = capacidade;
+  }
+
+  mover(): void {
+    console.log(`O avião da ${this.marca} está voando com ${this.capacidade} passageiros.`);
+  }
+}
+
+// ===============================================
+// Demonstração prática do Polimorfismo
+// ===============================================
+
+// Cria objetos de tipos diferentes, mas todos são 'Veiculo'
+const v1 = new Carro("Toyota", 4);
+const v2 = new Bicicleta("Caloi", "mountain bike");
+const v3 = new Aviao("Embraer", 180);
+
+// Cria um array com todos os veículos
+// Observe que o tipo do array é o da classe base (Veiculo)
+const frota: Veiculo[] = [v1, v2, v3];
+
+// Percorre todos os veículos e executa o mesmo método 'mover'
+// O comportamento é diferente para cada tipo de objeto
+console.log("\n=== Movimento dos veículos ===");
+for (const veiculo of frota) {
+  veiculo.mover(); // Polimorfismo em ação!
+}
+
+// ===============================================
+// Saída esperada:
+// O carro da marca Toyota está dirigindo na estrada com 4 portas.
+// A bicicleta mountain bike da marca Caloi está pedalando pela ciclovia.
+// O avião da Embraer está voando com 180 passageiros.
+// ===============================================

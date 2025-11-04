@@ -1,0 +1,115 @@
+// ===============================================
+// Exemplo: Herança em TypeScript
+// Conceitos: Classe base, Subclasse, Sobrescrita de método (override), Polimorfismo
+// ===============================================
+
+// Classe base (ou superclasse)
+// Representa um funcionário genérico da empresa
+class Funcionario {
+  nome: string;
+  salarioBase: number;
+
+  constructor(nome: string, salarioBase: number) {
+    this.nome = nome;
+    this.salarioBase = salarioBase;
+  }
+
+  // Método comum a todos os funcionários
+  // Pode ser sobrescrito (override) nas subclasses
+  calcularSalario(): number {
+    return this.salarioBase;
+  }
+
+  // Método para exibir informações do funcionário
+  exibirInfo(): void {
+    console.log(`Funcionário: ${this.nome}`);
+    console.log(`Salário: R$${this.calcularSalario().toFixed(2)}`);
+  }
+}
+
+// Subclasse que herda de Funcionario
+// Representa um funcionário CLT (com carteira assinada)
+class FuncionarioCLT extends Funcionario {
+  beneficios: number;
+
+  constructor(nome: string, salarioBase: number, beneficios: number) {
+    // Chama o construtor da classe pai (Funcionario)
+    super(nome, salarioBase);
+    this.beneficios = beneficios;
+  }
+
+  // Sobrescreve o método calcularSalario()
+  calcularSalario(): number {
+    // Soma o salário base com os benefícios
+    return this.salarioBase + this.beneficios;
+  }
+}
+
+// Subclasse que herda de Funcionario
+// Representa um funcionário freelancer
+class Freelancer extends Funcionario {
+  horasTrabalhadas: number;
+  valorHora: number;
+
+  constructor(nome: string, horasTrabalhadas: number, valorHora: number) {
+    // O freelancer não tem salário fixo, então passa 0 para o construtor pai
+    super(nome, 0);
+    this.horasTrabalhadas = horasTrabalhadas;
+    this.valorHora = valorHora;
+  }
+
+  // Sobrescreve o método calcularSalario() da classe pai
+  calcularSalario(): number {
+    // O pagamento depende da quantidade de horas e valor por hora
+    return this.horasTrabalhadas * this.valorHora;
+  }
+}
+
+// Subclasse adicional (exemplo avançado)
+// Representa um gerente (um tipo de funcionário CLT com bônus adicional)
+class Gerente extends FuncionarioCLT {
+  bonus: number;
+
+  constructor(nome: string, salarioBase: number, beneficios: number, bonus: number) {
+    // Reaproveita construtor de FuncionarioCLT
+    super(nome, salarioBase, beneficios);
+    this.bonus = bonus;
+  }
+
+  // Sobrescreve novamente o método calcularSalario()
+  calcularSalario(): number {
+    // Reaproveita o cálculo da classe pai (salário + benefícios)
+    // e adiciona o bônus do gerente
+    return super.calcularSalario() + this.bonus;
+  }
+}
+
+// ===============================================
+// Demonstração prática
+// ===============================================
+
+// Criação de diferentes tipos de funcionários
+const f1 = new Funcionario("João", 2000);
+const f2 = new FuncionarioCLT("Maria", 2500, 500);
+const f3 = new Freelancer("Carlos", 80, 50); // 80h * R$50 = 4000
+const f4 = new Gerente("Fernanda", 4000, 800, 1200);
+
+// Exibe informações individuais
+f1.exibirInfo(); // João -> Salário: R$2000.00
+f2.exibirInfo(); // Maria -> Salário: R$3000.00
+f3.exibirInfo(); // Carlos -> Salário: R$4000.00
+f4.exibirInfo(); // Fernanda -> Salário: R$6000.00
+
+// ===============================================
+// Exemplo de POLIMORFISMO
+// ===============================================
+
+// Cria uma lista de funcionários (de tipos diferentes)
+const equipe: Funcionario[] = [f1, f2, f3, f4];
+
+// Percorre todos os funcionários e chama o mesmo método
+// Note que o comportamento muda dependendo da subclasse
+console.log("\n--- Folha de Pagamento ---");
+equipe.forEach(func => {
+  func.exibirInfo(); // Polimorfismo em ação!
+});

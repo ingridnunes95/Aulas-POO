@@ -1,0 +1,30 @@
+//Exceção: É como um "grito de ajuda" do programa quando algo dá errado. 
+//Imagine que seu código está seguindo um caminho e de repente encontra um obstáculo - a exceção é a forma de avisar sobre esse problema.
+
+// Vamos criar uma hierarquia de erros personalizada
+// Isso é como criar diferentes tipos de "alertas" para diferentes problemas
+
+// Classe base para todos os nossos erros personalizados
+
+class ApplicationError extends Error {
+    constructor(message: string, public code: string = "APP_ERROR") {
+        super(message); // Chama o construtor da classe pai (Error)
+        this.name = this.constructor.name; // Define o nome do erro
+    }
+}
+
+// Erro específico para problemas de validação (dados inválidos)
+class ValidationError extends ApplicationError {
+    constructor(message: string, public field: string) {
+        super(message, "VALIDATION_ERROR"); // Chama o construtor do pai
+        this.field = field; // Campo que falhou na validação
+    }
+}
+
+// Erro específico para problemas de banco de dados
+class DatabaseError extends ApplicationError {
+    constructor(message: string, public query: string) {
+        super(message, "DATABASE_ERROR");
+        this.query = query; // A query que causou o problema
+    }
+}

@@ -1,0 +1,21 @@
+// TODO: Implemente usando Factory Pattern
+
+interface PaymentMethod {
+    pay(amount: number): boolean;
+}
+
+// TODO: Implemente estas classes:
+// - CreditCardPayment
+// - PayPalPayment  
+// - BankTransferPayment
+// - CryptocurrencyPayment (desafio!)
+
+class PaymentMethodFactory {
+    static create(type: string): PaymentMethod {
+        // TODO: Retorne a implementação correta baseada no tipo
+    }
+}
+
+// TESTE:
+const payment = PaymentMethodFactory.create("credit_card");
+const success = payment.pay(100); // Deve retornar true/false

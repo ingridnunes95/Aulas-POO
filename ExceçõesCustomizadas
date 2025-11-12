@@ -1,0 +1,53 @@
+// Erro específico para saldo insuficiente
+class InsufficientFundsError extends ApplicationError {
+    constructor(
+        public currentBalance: number,  // Saldo atual
+        public requiredAmount: number   // Valor que tentou sacar
+    ) {
+        // Mensagem mais descritiva
+        super(
+            `Saldo insuficiente! Você tem R$ ${currentBalance} mas precisa de R$ ${requiredAmount}`,
+            "INSUFFICIENT_FUNDS"
+        );
+    }
+}
+
+class Account {
+    constructor(public number: string, private balance: number = 0) {}
+    
+    withdraw(amount: number): void {
+        console.log(`Tentando sacar R$ ${amount} da conta ${this.number}`);
+        
+        // Verifica se tem saldo suficiente
+        if (amount > this.balance) {
+            throw new InsufficientFundsError(this.balance, amount);
+        }
+        
+        // Verifica se o valor é positivo
+        if (amount <= 0) {
+            throw new ValidationError("Valor deve ser positivo", "amount");
+        }
+        
+        // Se tudo estiver ok, realiza o saque
+        this.balance -= amount;
+        console.log(`Saque de R$ ${amount} realizado. Novo saldo: R$ ${this.balance}`);
+    }
+    
+    deposit(amount: number): void {
+        if (amount <= 0) {
+            throw new ValidationError("Valor do depósito deve ser positivo", "amount");
+        }
+        
+        this.balance += amount;
+        console.log(`Depósito de R$ ${amount} realizado. Novo saldo: R$ ${this.balance}`);
+    }
+}
+
+// Vamos testar nossa conta bancária
+try {
+    const myAccount = new Account("12345-6", 100); // Conta com R$ 100
+    myAccount.withdraw(50);  // Isso funciona
+    myAccount.withdraw(100); // Isso vai gerar erro!
+} catch (error) {
+    console.log("Erro no banco:", error.message);
+}

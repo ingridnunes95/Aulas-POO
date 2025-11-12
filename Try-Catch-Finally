@@ -1,0 +1,54 @@
+class UserService {
+    private users: Map<string, User> = new Map(); // "Armário" para guardar usuários
+    
+    createUser(userData: { name: string; email: string; age: number }): User {
+        // TRY: Tente executar este bloco de código
+        try {
+            console.log("Validando dados do usuário...");
+            
+            // Verifica se o email é válido
+            if (!userData.email.includes('@')) {
+                // THROW: Lança uma exceção (como gritar "SOCORRO!")
+                throw new ValidationError("Email inválido", "email");
+            }
+            
+            // Verifica se a idade é positiva
+            if (userData.age < 0) {
+                throw new ValidationError("Idade não pode ser negativa", "age");
+            }
+            
+            // Verifica se o usuário já existe
+            if (this.users.has(userData.email)) {
+                throw new ApplicationError("Usuário já existe");
+            }
+            
+            // Se passou por todas as validações, cria o usuário
+            const user = new User(userData.name, userData.email, userData.age);
+            this.users.set(userData.email, user);
+            console.log("Usuário criado com sucesso!");
+            
+            return user;
+            
+        } 
+        // CATCH: Captura a exceção (ouve o "grito de socorro")
+        catch (error) {
+            console.log("Algo deu errado! Capturando o erro...");
+            
+            // Verifica que tipo de erro foi
+            if (error instanceof ValidationError) {
+                console.error(`Erro de validação no campo ${error.field}: ${error.message}`);
+            } else if (error instanceof ApplicationError) {
+                console.error(`Erro da aplicação: ${error.message}`);
+            } else {
+                console.error(`Erro inesperado: ${error}`);
+            }
+            
+            // Re-lança o erro para quem chamou este método
+            throw error;
+        } 
+        // FINALLY: Sempre executa, dando erro ou não
+        finally {
+            console.log("Esta mensagem sempre aparece, com erro ou sem erro!");
+        }
+    }
+}

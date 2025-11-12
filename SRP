@@ -1,0 +1,41 @@
+//Análise e Projeto Orientado a Objetos
+//Princípios SOLID - As "Leis do Bom Código"
+//Single Responsibility Principle (SRP)
+//"Cada classe deve ter apenas UMA razão para mudar"
+
+// RUIM: A classe faz muitas coisas diferentes
+// Se precisar mudar email, relatório ou validação, tenho que mexer aqui
+class UserManager {
+    constructor(private db: Database) {}
+    
+    createUser(userData: any) { /* ... */ }    // Gerencia usuários
+    deleteUser(userId: string) { /* ... */ }   // Gerencia usuários  
+    sendEmail(to: string, subject: string) { /* ... */ }  // Envia emails?!
+    generateReport() { /* ... */ }             // Gera relatórios?!
+    validateUserData(userData: any) { /* ... */ } // Valida dados?!
+}
+
+// BOM: Cada classe tem uma única responsabilidade
+class UserRepository {
+    // Sabe apenas como guardar/recuperar usuários
+    constructor(private db: Database) {}
+    
+    create(user: User) { /* ... */ }
+    findById(id: string) { /* ... */ }
+    delete(id: string) { /* ... */ }
+}
+
+class EmailService {
+    // Sabe apenas como enviar emails
+    send(to: string, subject: string, body: string) { /* ... */ }
+}
+
+class UserValidator {
+    // Sabe apenas como validar dados de usuário
+    validate(userData: any): ValidationResult { /* ... */ }
+}
+
+class ReportGenerator {
+    // Sabe apenas como gerar relatórios
+    generateUserReport(userId: string) { /* ... */ }
+}

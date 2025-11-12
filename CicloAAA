@@ -1,0 +1,20 @@
+//O Ciclo AAA (Arrange-Act-Assert)
+
+// Vamos testar a função divide seguindo o padrão AAA:
+
+// ARRANGE: Prepara o cenário do teste
+const calculator = new Calculator();
+const numeroA = 10;
+const numeroB = 2;
+const resultadoEsperado = 5;
+
+// ACT: Executa a ação que queremos testar
+const resultadoReal = calculator.divide(numeroA, numeroB);
+
+// ASSERT: Verifica se o resultado é o esperado
+if (resultadoReal === resultadoEsperado) {
+    console.log("Teste PASSOU! Divisão funciona corretamente");
+} else {
+    console.log("Teste FALHOU!");
+    console.log(`Esperado: ${resultadoEsperado}, Recebido: ${resultadoReal}`);
+}

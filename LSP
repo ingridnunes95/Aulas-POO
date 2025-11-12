@@ -1,0 +1,50 @@
+// Liskov Substitution Principle (LSP)
+//"Classes filhas devem poder substituir classes pai sem quebrar o programa"
+
+// Pensando em pássaros: todos são pássaros, mas nem todos voam!
+
+abstract class Bird {
+    abstract move(): void; // Todos os pássaros se movem, mas de formas diferentes
+}
+
+class FlyingBird extends Bird {
+    move(): void {
+        console.log("Voando pelos céus...");
+    }
+}
+
+class NonFlyingBird extends Bird {
+    move(): void {
+        console.log("Andando pelo chão...");
+    }
+}
+
+// Agora criamos pássaros específicos
+class Sparrow extends FlyingBird {
+    move(): void {
+        console.log("Pardal voando rapidamente entre árvores");
+    }
+}
+
+class Penguin extends NonFlyingBird {
+    move(): void {
+        console.log("Pinguim deslizando elegantemente no gelo");
+    }
+}
+
+class Ostrich extends NonFlyingBird {
+    move(): void {
+        console.log("Avestruz correndo muito rápido!");
+    }
+}
+
+// Esta função aceita QUALQUER pássaro!
+function makeBirdMove(bird: Bird): void {
+    console.log("Ação do pássaro:");
+    bird.move(); // Não importa se voa, anda ou nada - todos são pássaros!
+}
+
+// Testando: todos funcionam!
+makeBirdMove(new Sparrow());    // Pardal voando
+makeBirdMove(new Penguin());    // Pinguim deslizando  
+makeBirdMove(new Ostrich());    // Avestruz correndo

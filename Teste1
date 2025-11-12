@@ -1,0 +1,76 @@
+//Teste de Software Aplicado ao Paradigma OO
+//Testando uma Classe de Carrinho de Compras
+
+// Sistema que vamos testar
+class ShoppingCart {
+    private items: CartItem[] = []; // Array vazio para os itens
+    
+    // Adiciona um produto ao carrinho
+    addItem(product: Product, quantity: number = 1): void {
+        console.log(`Adicionando ${quantity}x ${product.name} ao carrinho`);
+        
+        // Verifica se o produto já está no carrinho
+        const existingItem = this.items.find(item => item.product.id === product.id);
+        
+        if (existingItem) {
+            // Se já existe, aumenta a quantidade
+            existingItem.quantity += quantity;
+            console.log(`Agora temos ${existingItem.quantity}x ${product.name}`);
+        } else {
+            // Se não existe, adiciona novo item
+            this.items.push(new CartItem(product, quantity));
+            console.log(`Novo item adicionado: ${product.name}`);
+        }
+    }
+    
+    // Remove um produto do carrinho
+    removeItem(productId: string): void {
+        console.log(`Tentando remover produto ${productId}`);
+        const initialCount = this.items.length;
+        
+        this.items = this.items.filter(item => item.product.id !== productId);
+        
+        if (this.items.length < initialCount) {
+            console.log("Produto removido com sucesso");
+        } else {
+            console.log("Produto não encontrado no carrinho");
+        }
+    }
+    
+    // Calcula o total da compra
+    getTotal(): number {
+        const total = this.items.reduce((total, item) => {
+            return total + (item.product.price * item.quantity);
+        }, 0);
+        
+        console.log(`Total do carrinho: R$ ${total}`);
+        return total;
+    }
+    
+    // Mostra todos os itens do carrinho (apenas leitura)
+    getItems(): ReadonlyArray<CartItem> {
+        return [...this.items]; // Retorna uma cópia para não modificar o original
+    }
+    
+    // Esvazia o carrinho
+    clear(): void {
+        console.log("Esvaziando o carrinho...");
+        this.items = [];
+    }
+}
+
+// Classes auxiliares
+class CartItem {
+    constructor(
+        public readonly product: Product, // Produto (não pode mudar)
+        public quantity: number           // Quantidade (pode mudar)
+    ) {}
+}
+
+class Product {
+    constructor(
+        public readonly id: string,    // ID único (não pode mudar)
+        public readonly name: string,  // Nome do produto
+        public readonly price: number  // Preço em reais
+    ) {}
+}

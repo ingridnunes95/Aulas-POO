@@ -1,0 +1,94 @@
+class BankAccount {
+    private transactions: string[] = []; // Histórico de transações
+    
+    constructor(public readonly accountNumber: string, private balance: number = 0) {
+        console.log(`Nova conta criada: ${accountNumber} com R$ ${balance}`);
+    }
+    
+    deposit(amount: number): void {
+        console.log(`Tentando depositar R$ ${amount}`);
+        
+        if (amount <= 0) {
+            throw new ValidationError("Valor do depósito deve ser positivo", "amount");
+        }
+        
+        this.balance += amount;
+        this.transactions.push(`DEPÓSITO: +R$ ${amount}`);
+        console.log(`Depósito realizado! Novo saldo: R$ ${this.balance}`);
+    }
+    
+    withdraw(amount: number): void {
+        console.log(`Tentando sacar R$ ${amount}`);
+        
+        if (amount <= 0) {
+            throw new ValidationError("Valor do saque deve ser positivo", "amount");
+        }
+        
+        if (amount > this.balance) {
+            throw new InsufficientFundsError(this.balance, amount);
+        }
+        
+        this.balance -= amount;
+        this.transactions.push(`SAQUE: -R$ ${amount}`);
+        console.log(`Saque realizado! Novo saldo: R$ ${this.balance}`);
+    }
+    
+    getBalance(): number {
+        return this.balance;
+    }
+}
+
+// Testes para verificar se os erros acontecem quando deveriam
+class BankAccountTests {
+    testWithdrawWithInsufficientFunds(): void {
+        console.log("\n TESTE: Saque com saldo insuficiente");
+        
+        // ARRANGE: Conta com pouco dinheiro
+        const account = new BankAccount("123", 50); // Apenas R$ 50
+        
+        try {
+            // ACT: Tenta sacar mais do que tem
+            account.withdraw(100); // Tenta sacar R$ 100
+            
+            // Se chegou aqui, NÃO deu erro - isso é RUIM!
+            console.log("FALHA: Era para ter dado erro de saldo insuficiente!");
+            
+        } catch (error) {
+            // ASSERT: Deu erro - isso é BOM!
+            if (error instanceof InsufficientFundsError) {
+                console.log("SUCESSO: Erro de saldo insuficiente foi lançado!");
+                console.log(`Mensagem: ${error.message}`);
+            } else {
+                console.log("FALHA: Deu erro, mas não era o esperado!");
+            }
+        }
+    }
+    
+    testDepositWithNegativeAmount(): void {
+        console.log("\n TESTE: Depósito com valor negativo");
+        
+        // ARRANGE
+        const account = new BankAccount("456", 100);
+        
+        try {
+            // ACT: Tenta depositar valor negativo
+            account.deposit(-50); // Isso não deveria ser permitido!
+            
+            console.log("FALHA: Era para ter dado erro de valor inválido!");
+            
+        } catch (error) {
+            // ASSERT
+            if (error instanceof ValidationError) {
+                console.log("SUCESSO: Erro de validação foi lançado!");
+                console.log(`Campo com erro: ${error.field}`);
+            } else {
+                console.log("FALHA: Deu erro, mas não era o esperado!");
+            }
+        }
+    }
+}
+
+// Executando os testes de exceção
+const bankTests = new BankAccountTests();
+bankTests.testWithdrawWithInsufficientFunds();
+bankTests.testDepositWithNegativeAmount();

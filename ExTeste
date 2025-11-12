@@ -1,0 +1,46 @@
+//Introdução ao Teste de Software
+//Por que testar? Testar é como ter um detetive que verifica se seu código funciona corretamente
+
+// Classe que queremos testar
+class Calculator {
+    // Soma dois números
+    add(a: number, b: number): number {
+        return a + b;
+    }
+    
+    // Subtrai dois números
+    subtract(a: number, b: number): number {
+        return a - b;
+    }
+    
+    // Multiplica dois números
+    multiply(a: number, b: number): number {
+        return a * b;
+    }
+    
+    // Divide dois números (cuidado com divisão por zero!)
+    divide(a: number, b: number): number {
+        if (b === 0) {
+            throw new Error("Divisão por zero não é permitida!");
+        }
+        return a / b;
+    }
+}
+
+// Vamos pensar em como testar a calculadora manualmente:
+console.log("Testando a calculadora...");
+
+const calc = new Calculator();
+
+// Teste 1: Soma
+console.log("1 + 1 =", calc.add(1, 1)); // Esperado: 2
+
+// Teste 2: Subtração  
+console.log("5 - 3 =", calc.subtract(5, 3)); // Esperado: 2
+
+// Teste 3: Divisão por zero
+try {
+    calc.divide(10, 0);
+} catch (error) {
+    console.log("Correto! Pegou o erro de divisão por zero");
+}

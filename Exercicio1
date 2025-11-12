@@ -1,0 +1,25 @@
+//EXERCICIO 1: SISTEMA DE BIBLIOTECA
+
+// TODO: Implemente estas classes seguindo os princípios SOLID
+
+class Book {
+    // TODO: title, author, ISBN, available (booleano)
+}
+
+class Library {
+    // TODO: 
+    // - addBook(book: Book): void
+    // - removeBook(isbn: string): void  
+    // - borrowBook(isbn: string): Book
+    // - returnBook(book: Book): void
+    // - findBook(isbn: string): Book | null
+}
+
+class User {
+    // TODO: name, id, borrowedBooks (array de Book)
+}
+
+// DICAS:
+// 1. Use try-catch nas operações que podem falhar
+// 2. Lance exceções específicas (BookNotFoundError, BookAlreadyBorrowedError)
+// 3. Escreva testes para cada método

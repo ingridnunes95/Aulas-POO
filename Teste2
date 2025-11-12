@@ -1,0 +1,77 @@
+// Vamos criar testes que qualquer um entenda!
+class ShoppingCartTests {
+    testAddItem(): void {
+        console.log("\n TESTE: Adicionar item ao carrinho");
+        
+        // ARRANGE: Prepara o cenário
+        const cart = new ShoppingCart();
+        const notebook = new Product("1", "Notebook Dell", 2500);
+        
+        // ACT: Executa a ação
+        cart.addItem(notebook, 1);
+        
+        // ASSERT: Verifica o resultado
+        const items = cart.getItems();
+        console.log("Itens no carrinho:", items.length);
+        
+        if (items.length === 1) {
+            console.log("SUCESSO: Item foi adicionado!");
+        } else {
+            console.log("FALHA: Item não foi adicionado!");
+        }
+    }
+    
+    testCalculateTotal(): void {
+        console.log("\n TESTE: Calcular total do carrinho");
+        
+        // ARRANGE
+        const cart = new ShoppingCart();
+        const mouse = new Product("2", "Mouse Logitech", 80);
+        const teclado = new Product("3", "Teclado Mechanical", 200);
+        
+        // ACT: Adiciona vários itens
+        cart.addItem(mouse, 2);    // 2 x R$ 80 = R$ 160
+        cart.addItem(teclado, 1);  // 1 x R$ 200 = R$ 200
+                                   // TOTAL ESPERADO: R$ 360
+        
+        // ASSERT
+        const total = cart.getTotal();
+        console.log(`Total calculado: R$ ${total}`);
+        
+        if (total === 360) {
+            console.log("SUCESSO: Total calculado corretamente!");
+        } else {
+            console.log(`FALHA: Esperado R$ 360, mas recebido R$ ${total}`);
+        }
+    }
+    
+    testRemoveItem(): void {
+        console.log("\n TESTE: Remover item do carrinho");
+        
+        // ARRANGE
+        const cart = new ShoppingCart();
+        const produto = new Product("4", "Monitor Samsung", 800);
+        cart.addItem(produto, 1);
+        
+        console.log("Carrinho antes de remover:", cart.getItems().length);
+        
+        // ACT
+        cart.removeItem("4"); // Remove pelo ID
+        
+        // ASSERT
+        const itemsAfterRemoval = cart.getItems();
+        console.log("Carrinho depois de remover:", itemsAfterRemoval.length);
+        
+        if (itemsAfterRemoval.length === 0) {
+            console.log("SUCESSO: Item removido corretamente!");
+        } else {
+            console.log("FALHA: Item não foi removido!");
+        }
+    }
+}
+
+// Executando os testes
+const tests = new ShoppingCartTests();
+tests.testAddItem();
+tests.testCalculateTotal();
+tests.testRemoveItem();

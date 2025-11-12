@@ -1,0 +1,48 @@
+// Open/Closed Principle (OCP)
+//"Aberto para extensão, fechado para modificação"
+
+// Imagine que temos um processador de pagamentos
+// Queremos adicionar novos métodos sem modificar o código existente
+
+// Interface que define o contrato para todos os métodos de pagamento
+interface PaymentMethod {
+    process(amount: number): void;
+}
+
+// Cada classe implementa a interface à sua maneira
+class CreditCardPayment implements PaymentMethod {
+    process(amount: number): void {
+        console.log(`💳 Processando R$ ${amount} via cartão de crédito`);
+        // Lógica específica do cartão
+    }
+}
+
+class PayPalPayment implements PaymentMethod {
+    process(amount: number): void {
+        console.log(`Processando R$ ${amount} via PayPal`);
+        // Lógica específica do PayPal
+    }
+}
+
+class BankTransferPayment implements PaymentMethod {
+    process(amount: number): void {
+        console.log(`Processando R$ ${amount} via transferência bancária`);
+        // Lógica específica de transferência
+    }
+}
+
+// O processador principal NÃO precisa mudar quando adicionamos novos métodos
+class PaymentProcessor {
+    processPayment(amount: number, method: PaymentMethod): void {
+        console.log(`Iniciando processamento de R$ ${amount}`);
+        method.process(amount); // Delega o trabalho para o método específico
+        console.log("Pagamento processado com sucesso!");
+    }
+}
+
+// Uso: Muito fácil adicionar novos métodos de pagamento!
+const processor = new PaymentProcessor();
+processor.processPayment(100, new CreditCardPayment());
+processor.processPayment(200, new PayPalPayment());
+
+// Amanhã posso criar BitcoinPayment sem modificar o PaymentProcessor!
